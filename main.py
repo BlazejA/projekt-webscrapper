@@ -1,14 +1,11 @@
 import json
 
+import pymongo
+from bson import json_util
 from fastapi import FastAPI
-from deta import Deta
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
-deta = Deta("a0yajbef_9suuW9RaRuF56dhpH8P4ua7mvquRWbht")
-
-euro = deta.Base("euro")
 
 origins = [
     "http://localhost:3000",
@@ -23,20 +20,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+client = pymongo.MongoClient("mongodb+srv://admin:admin1@atlascluster.5r0ou.mongodb.net/?retryWrites=true&w=majority")
+db = client['apple_products']
+
 
 @app.get("/euro")
 async def ShowEuroData():
-    return euro.fetch()
+    table = db["euro_products"]
+    data = list(parse_json(table.find({})))
+    return data
 
 
 @app.get("/")
 async def ShowEuroData():
-    # drive = deta.Drive("ui")
-    # drive.put("main", r"C:\Users\ablaz\source\repos\PriceCompare\projekt-webscrapper\webscrapper-ui\index.html")
-
     return "Main test"
 
 
 @app.get("/products")
 async def ShowEuroData():
     return "Witam wszytkich bardzo serdecznie"
+
+
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
