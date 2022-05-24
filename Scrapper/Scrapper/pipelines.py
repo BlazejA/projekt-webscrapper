@@ -9,16 +9,13 @@ from itemadapter import ItemAdapter
 
 import pymongo
 
-class ScrapperPipeline:
-
-    def __init__(self):
-        self.conn = pymongo.MongoClient(
-            'localhost',
-            27017
-        )
-        db = self.conn['data']
-        self.collection = db['price']
-
-    def process_item(self, item, spider):
-        self.collection.insert_one(dict(item))
-        return item
+# class ScrapperPipeline:
+#
+#     def __init__(self):
+#         # self.conn = pymongo.MongoClient()
+#         # db = self.conn['data']
+#         # self.collection = db['price']
+#         return
+#
+#     def process_item(self, item, spider):
+#         return item

@@ -1,0 +1,5 @@
+fastapi==0.78.0
+pymongo==4.1.1
+Scrapy==2.6.1
+uvicorn==0.17.6
+deta==1.1.0
