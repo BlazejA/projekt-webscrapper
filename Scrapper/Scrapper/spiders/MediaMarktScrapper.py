@@ -56,19 +56,17 @@ class MediaScrapper(scrapy.Spider):
                 camera = None
             yield {
                 'name': products.css('h2.title::text').get(),
-                'actual_price': actual_price,
-                'old_price': old_price,
+                'actualPrice': actual_price,
+                'oldPrice': old_price,
                 'category': self.GetCategoryByProductName(products.css('h2.title::text').get()),
                 'shop': 'media_markt',
                 'details': {
-                    'screen':
-                        {
-                            'screen_name': screen,
-                            'internal_storage': internal_storage,
-                            'ram': ram,
-                            'camera': camera,
-                            'system': system
-                        }
+                    'screen': screen,
+                    'internalStorage': internal_storage,
+                    'ram': ram,
+                    'camera': camera,
+                    'system': system
+
                 },
                 'img': products.css('div.column.gallery div.spark-image').attrib['src'],
                 'link': "https://mediamarkt.pl" + products.css('div.info a').attrib['href']
@@ -83,10 +81,8 @@ class MediaScrapper(scrapy.Spider):
 
     def GetCategoryByProductName(self, value: str) -> str:
         if "iphone" in value.lower():
-            return "Phone"
+            return "smartphone"
         elif "mac" in value.lower():
-            return "Laptop"
-        elif "ipad" in value.lower():
-            return "Tablet"
+            return "laptop"
         else:
-            return "Other"
+            return "other"
