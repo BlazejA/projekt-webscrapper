@@ -8,9 +8,7 @@ class CortlandScrapper(scrapy.Spider):
         'https://www.cortland.pl/apple-iphone/wszystkie.html',
         'https://www.cortland.pl/komputery-mac/macbook-air.html',
         'https://www.cortland.pl/komputery-mac/macbook-pro.html',
-        'https://www.cortland.pl/komputery-mac/mac-mini.html',
-        'https://www.cortland.pl/komputery-mac/mac-studio.html',
-        'https://www.cortland.pl/komputery-mac/mac-pro.html',
+
     ]
 
     custom_settings = {
@@ -35,7 +33,7 @@ class CortlandScrapper(scrapy.Spider):
         if "iphone" in value.lower():
             return "Phone"
         elif "mac" in value.lower():
-            return "Komputer"
+            return "Laptop"
         elif "ipad" in value.lower():
             return "Tablet"
         else:
