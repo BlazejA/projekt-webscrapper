@@ -23,6 +23,7 @@ class CortlandScrapper(scrapy.Spider):
                 'actual_price': products.css('span.ty-price span.ty-price-num::text').extract()[1:2],
                 'link': products.css('a.product-title').attrib['href'],
                 'image':products.css('img.ty-pict').attrib['src'],
+                'shop': 'Cortland',
                 'category':self.GetCategoryByProductName(products.css('a.product-title::text').get())
             }
         next_page = response.css('a.ty-pagination__next::attr(href)').get()
