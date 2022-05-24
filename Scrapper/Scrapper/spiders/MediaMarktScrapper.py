@@ -6,26 +6,29 @@ class MediaScrapper(scrapy.Spider):
 
     start_urls = [
         'https://mediamarkt.pl/telefony-i-smartfony/smartfony/wszystkie-smartfony.apple',
-        #'https://mediamarkt.pl/komputery-i-tablety/laptopy-laptopy-2-w-1/notebooki.apple',
+        'https://mediamarkt.pl/komputery-i-tablety/laptopy-laptopy-2-w-1/notebooki.apple',
     ]
 
     custom_settings = {
         'COLLECTION_NAME': 'products'
     }
+    global count
+    count = 0
 
     def parse(self, response):
 
         for products in response.css('div.offer'):
-
+            global count
+            count += 1
             if products.css('div.old-price span::text').get() is not None:
 
                 old_price = products.css('div.old-price span::text').get().strip()
             else:
-                 old_price = None
+                old_price = None
             try:
                 actual_price = products.css('span.whole::text').get().strip()
             except:
-                actual_price= None
+                actual_price = None
 
             try:
                 system = products.css('span.product-attribute-value::text').extract()[6:7][0].strip()
@@ -50,7 +53,7 @@ class MediaScrapper(scrapy.Spider):
             try:
                 camera = products.css('span.product-attribute-value::text').extract()[4:5][0].strip()
             except:
-                camera= None
+                camera = None
             yield {
                 'name': products.css('h2.title::text').get(),
                 'actual_price': actual_price,
@@ -71,15 +74,12 @@ class MediaScrapper(scrapy.Spider):
                 'link': "https://mediamarkt.pl" + products.css('div.info a').attrib['href']
             }
 
-
-
         next_page = response.css('div.more-offers a').attrib['href']
-        yield{'XXXXXXXXXX': next_page}
-        if next_page is not None:
-                yield response.follow("https://mediamarkt.pl" + next_page, callback=self.parse)
+        if count >= 130:
+            scrapy.Spider.close()
 
-
-
+        elif next_page is not None:
+            yield response.follow("https://mediamarkt.pl" + next_page, callback=self.parse)
 
     def GetCategoryByProductName(self, value: str) -> str:
         if "iphone" in value.lower():
