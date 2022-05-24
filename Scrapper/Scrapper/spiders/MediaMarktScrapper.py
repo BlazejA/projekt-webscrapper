@@ -76,7 +76,7 @@ class MediaScrapper(scrapy.Spider):
 
         next_page = response.css('div.more-offers a').attrib['href']
         if count >= 130:
-            scrapy.Spider.close()
+            scrapy.Spider.close(self, reason="end")
 
         elif next_page is not None:
             yield response.follow("https://mediamarkt.pl" + next_page, callback=self.parse)
