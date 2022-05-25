@@ -5,7 +5,7 @@ import sys
 class ScrapperPipeline:
 
     def __init__(self):
-        self.collection = "euro_products"
+        self.collection = "cortland_products"
         self.mongodb_uri = "mongodb+srv://admin:admin1@atlascluster.5r0ou.mongodb.net/?retryWrites=true&w=majority"
         self.mongodb_db = "apple_products"
         if not self.mongodb_uri:

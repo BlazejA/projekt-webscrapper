@@ -10,8 +10,9 @@ class MediaScrapper(scrapy.Spider):
     ]
 
     custom_settings = {
-        'COLLECTION_NAME': 'products'
+        'Scrapper.MediaMarktPipelines.ScrapperPipeline': 400,
     }
+
     global count
     count = 0
 

@@ -31,14 +31,29 @@ async def ShowEuroData():
     return data
 
 
-@app.get("/")
+@app.get("/media-markt")
 async def ShowEuroData():
-    return "Main test"
+    table = db["media_markt_products"]
+    data = list(parse_json(table.find({})))
+    return data
 
 
-@app.get("/products")
+@app.get("/cortland")
 async def ShowEuroData():
-    return "Witam wszytkich bardzo serdecznie"
+    table = db["cortland_products"]
+    data = list(parse_json(table.find({})))
+    return data
+
+
+@app.get("/all")
+async def ShowEuroData():
+    tableeuro = db["euro_products"]
+    data = list(parse_json(tableeuro.find({})))
+    tablemedia = db["media_markt_products"]
+    data.extend(list(parse_json(tablemedia.find({}))))
+    tablecortland = db["cortland_products"]
+    data.extend(parse_json(tablecortland.find({})))
+    return data
 
 
 def parse_json(data):

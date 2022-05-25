@@ -12,7 +12,7 @@ class CortlandScrapper(scrapy.Spider):
     ]
 
     custom_settings = {
-        'COLLECTION_NAME': 'products'
+        'Scrapper.CortlandPipelines.ScrapperPipeline': 500,
     }
 
     def parse(self, response):

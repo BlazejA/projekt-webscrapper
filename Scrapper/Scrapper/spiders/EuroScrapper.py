@@ -12,7 +12,7 @@ class EuroScrapper(scrapy.Spider):
     ]
 
     custom_settings = {
-        'COLLECTION_NAME': 'products'
+        'Scrapper.pipelines.ScrapperPipeline': 300,
     }
 
     def GetCategoryByProductName(self, value: str) -> str:
